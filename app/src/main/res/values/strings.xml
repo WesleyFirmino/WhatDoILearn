@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">WhatDoILearn</string>
+    <string name="description_item">Mussum Ipsum, cacilds vidis litro abertis. Mauris nec dolor in eros commodo tempor. Aenean aliquam molestie leo, vitae iaculis nisl. Praesent vel viverra nisi. Mauris aliquet nunc non turpis scelerisque, eget. Si u mundo tá muito paradis? Toma um mé que o mundo vai girarzis! Vehicula non. Ut sed ex eros. Vivamus sit amet nibh non tellus tristique interdum.</string>
+    <string name="title_item">Kotlin Collections</string>
+</resources>
