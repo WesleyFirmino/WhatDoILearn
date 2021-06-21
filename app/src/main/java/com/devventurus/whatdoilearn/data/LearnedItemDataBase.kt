@@ -1,6 +1,6 @@
 package com.devventurus.whatdoilearn.data
 
-class LearnedItemDataBase {
+object LearnedItemDataBase {
 
     fun getAll(): List<LearnedItem> {
 

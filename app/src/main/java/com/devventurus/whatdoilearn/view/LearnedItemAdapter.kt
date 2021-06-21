@@ -32,11 +32,18 @@ class LearnedItemAdapter : RecyclerView.Adapter<LearnedItemAdapter.LearnedItemVi
     inner class LearnedItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val titleContainer : TextView = itemView.findViewById(R.id.learnedItemTitle)
         private val descriptionContainer : TextView = itemView.findViewById(R.id.learnedItemDescription)
+        private val understandingLevelContainer : View = itemView.findViewById(R.id.undestandingLevel)
 
         fun bind(learnedItem: LearnedItem) {
             titleContainer.text = learnedItem.name
             descriptionContainer.text = learnedItem.description
-
+            understandingLevelContainer.setBackgroundResource (
+                when (learnedItem.understandingLevel.ordinal) {
+                0 -> R.color.understand_low
+                1 -> R.color.understand_medium
+                2 -> R.color.understand_high
+                    else -> R.color.default_color
+                })
         }
 
     }
