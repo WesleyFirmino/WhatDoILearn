@@ -6,11 +6,15 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.devventurus.whatdoilearn.R
-import com.devventurus.whatdoilearn.data.LearnedItem
+import com.devventurus.whatdoilearn.entities.LearnedItem
 
 class LearnedItemAdapter : RecyclerView.Adapter<LearnedItemAdapter.LearnedItemViewHolder>() {
 
     var learnedItems = listOf<LearnedItem>()
+        set(value) {
+            field = value
+            notifyDataSetChanged()
+        }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LearnedItemViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)

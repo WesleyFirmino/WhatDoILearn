@@ -1,10 +1,15 @@
-package com.devventurus.whatdoilearn.data
+package com.devventurus.whatdoilearn.data.database
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import androidx.sqlite.db.SupportSQLiteDatabase
+import com.devventurus.whatdoilearn.entities.LearnedItem
+import com.devventurus.whatdoilearn.entities.UnderstandingLevel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
 @Database(entities = [LearnedItem::class], version = 1, exportSchema = false)
 @TypeConverters(Converters::class)
@@ -17,16 +22,36 @@ abstract class LearnedItemDataBase : RoomDatabase() {
         @Volatile
         var INSTANCE: LearnedItemDataBase? = null
 
-        fun getDatabase(context: Context): LearnedItemDataBase {
+        fun getDatabase(context: Context, scope: CoroutineScope): LearnedItemDataBase {
             return INSTANCE ?: synchronized(this){
                 val dataBase = Room.databaseBuilder(
                     context.applicationContext,
                     LearnedItemDataBase::class.java,
-                    "learned_item_database").build()
+                    "learned_item_database")
+                    .addCallback(LearnedItemDatabadeCallback(scope))
+                    .build()
 
                 INSTANCE = dataBase
                 dataBase
             }
+        }
+    }
+
+    private class LearnedItemDatabadeCallback(
+        private val scope: CoroutineScope
+    ) : RoomDatabase.Callback() {
+        override fun onCreate(db: SupportSQLiteDatabase) {
+            super.onCreate(db)
+            INSTANCE?.let {
+                scope.launch {
+                    populateDatabase(it.learnedItemDao())
+                }
+            }
+        }
+
+        private fun populateDatabase(learnedItemDao: LearnedItemDao) {
+            val items = getAll()
+            learnedItemDao.insert(items)
         }
 
         fun getAll(): List<LearnedItem> {
@@ -41,6 +66,4 @@ abstract class LearnedItemDataBase : RoomDatabase() {
             )
         }
     }
-
-
 }

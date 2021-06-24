@@ -1,4 +1,4 @@
-package com.devventurus.whatdoilearn.data
+package com.devventurus.whatdoilearn.entities
 
 import com.devventurus.whatdoilearn.R
 
